@@ -177,3 +177,53 @@ end;
 --escrever set serveroutput on para mostrar os printlns
 --select verificarIsbn('1841462012') from dual;
 
+--procedures das tabelas
+--lembrete que para mostrar a output das procedures deve se usar SET SERVEROUTPUT ON
+
+--oficina parte 3 - ex1: Mostrar a lista de produtos na tela
+create or replace procedure mostrarProdutos
+AS
+Cursor cProduto is
+    select cod,nome,valor from produto order by cod;
+vCod produto.cod%type;
+vNome produto.nome%type;
+vValor produto.valor%type;
+begin
+    open cProduto;
+    loop
+        exit when cProduto%notfound;
+        fetch cProduto into vCod, vNome, vValor;
+        DBMS_OUTPUT.PUT_LINE(vCod);
+        DBMS_OUTPUT.PUT_LINE(vNome);
+        DBMS_OUTPUT.PUT_LINE(vValor);
+        DBMS_OUTPUT.NEW_LINE;
+    end loop;
+    close cProduto;
+end;
+/
+-- begin mostrarProdutos; end;
+
+--oficina parte 3 - ex2: Mostrar a lista de produtos vendidos, (com o vendedor)
+create or replace procedure mostrarVendas
+as
+cursor cVenda is
+    select p.nome,v.qtde,e.nome from venda v
+    inner join produto p on p.cod = v.codprod
+    inner join empregado e on e.cod = v.codemp;
+vPNome produto.nome%type;
+vENome empregado.nome%type;
+vVQtde venda.qtde%type;
+begin
+    open cVenda;
+    loop
+        exit when cVenda%notfound;
+        fetch cVenda into vPNome, vVQtde, vENome;
+        DBMS_OUTPUT.PUT_LINE(vPNome);
+        DBMS_OUTPUT.PUT_LINE(vVQtde);
+        DBMS_OUTPUT.PUT_LINE(vENome);
+        DBMS_OUTPUT.NEW_LINE;
+    end loop;
+    close cVenda;
+end;
+/
+-- begin mostrarVendas; end;
