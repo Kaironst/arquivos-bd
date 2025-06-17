@@ -16,6 +16,8 @@ GRANT SELECT ON vwempregado_curitiba TO CURITBA; --select view dava erro (acho q
 GRANT SELECT ON vwempregado_palotina TO PALOTINA;
 GRANT SELECT ON vwempregado_litoral TO LITORAL;
 
+
+--rodar esses códigos abaixo nos devidos usuarios
 create synonym empregado for database.vwempregado_curitiba;
 create synonym empregado for database.vwempregado_palotina;
 create synonym empregado for database.vwempregado_litoral;
